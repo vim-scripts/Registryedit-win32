@@ -1,0 +1,9 @@
+Perldoc	perl_doc.txt	/*Perldoc*
+g:perldoc_program	perl_doc.txt	/*g:perldoc_program*
+perldoc-commands	perl_doc.txt	/*perldoc-commands*
+perldoc-info	perl_doc.txt	/*perldoc-info*
+perldoc-matches	perl_doc.txt	/*perldoc-matches*
+perldoc-problems	perl_doc.txt	/*perldoc-problems*
+perldoc-variables	perl_doc.txt	/*perldoc-variables*
+perldoc.txt	perl_doc.txt	/*perldoc.txt*
+perldoc_program	perl_doc.txt	/*perldoc_program*

@@ -1,0 +1,15 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=418
+
+This plugin allows you to edit the Win32 registry through Vim.
+
+It was originally conceived after someone on the Vim Mailing list wanted to know how to extend Vim with Perl. Being the bright spark that I am I helpfully pointed out that it wasn't a case of learning how to extend Vim, but knowing how to use Perl to do something that Vim could not. This rules out many uses of Perl - you wouldn't process a CGI request or a log file within Vim. To balance the things you wouldn't do I came up with some suggestions as to things you might want to do. One of those was to make use of Vim's autocmds so you could access the Win32 registry. The original poster then said they'd like to see it done - out of curiousity than out of a challenge, but ever one to open my mouth wide I decided to put my money where my mouth was and this script was born.
+
+Quite simply this plugin extends Vim via Perl to enable Vim access to the data in the Win32 registry. You access it using the ever popular URL notation of protocol://file
+
+  registry://HKEY_CLASSES_ROOT/.vim
+
+From there on autocmds catch the request and hand it onto the functions RegistryRead() and RegistryWrite(). Inside both of these its all Perl work using the Win32::TieRegistry module by Tye McQueen to read and write (yes, write) to the registry.
+
+It is not a full implementation of Win32::TieRegistry. It just extracts the data, places it in Vim and then updates the registry when you save. It is intended for demonstration purposes (and my own learning) so it is not a stateful reflection of the registry. For example to add a line you just add it and hit save. To delete an entry, you don't just delete the line, you need to mark it with XX. This was intentional to prevent anyone from saving a blank file and then wondering why its all broken. I may change this in a future release if anyone *really* wants me to.
+
+However its mainly for learning purposes and since this is getting long already, please see the readme file for details.

@@ -1,0 +1,117 @@
+*registryedit.txt*      For Vim version 6.1.  Last change: 2002 Sep 16
+
+
+		REGISTRY EDIT PLUGIN REFERENCE by Colin Keith
+
+==============================================================================
+1. Plugin information					*registryedit-info*
+
+The RegistryEdit.vim plugin is a plugin designed to demonstrate how to extend
+Vim using Perl. It uses Perl in the backend to access the Windows32 registry
+taking information from the registry and storing it in your Vim session, then
+outputting the changes back to the registry when you save.
+
+It is intended mainly as a demonstration as to how Vim can interface with
+other areas of the computing environment by exploiting Perl and in turn the
+vast range of modules that have been written by members of the Perl community.
+It is not really intended for daily use. You could use it, but it is not the
+cutest of interfaces in terms of aesthetic appeal, but handy in terms of
+avilability and usefulness.
+
+==============================================================================
+		*registry://* *registryedit* *registryedit-usage* *RegistryEdit*
+2. RegistryEdit Usage
+
+The registryedit module is used in the same manner as the Netrw module is used
+to access files across the network. Except that instead of accessing files,
+you're working on data you retreive from the Windows registry and storing it
+back there again.
+
+To use access it simply supply a URL style filename to vim:
+
+ gvim registry://HKCR/.vim
+
+The Hive can be anyone of:
+
+  HKEY_CLASSES_ROOT,  HKCR, CRoot
+  HKEY_LOCAL_MACHINE, HKLM, LMachine
+  HKEY_CURRENT_USER,  HKCU, CUser
+  HKEY_USERS,         HKU,  Users
+  HKEY_CURRENT_CONFIG HKCC, CConfig
+
+You cannot skip the Hive name for safety purposes.
+
+After the hive name you specify the key you're interested in. This can be
+null, but it is not advised unless you have lots of memory/swap space to
+process all of the entries with.
+
+					*RegistryRead* *RegistryWrite*
+		*Registryedit-add* *Registryedit-chg* *Registryedit-del*
+
+When you specify a properly formatted URL, the function RegistryRead() will
+connect Perl to the registry and extract the information. If any keys are
+found to have subkeys, they are interogated too. Thus you might see something
+like:
+
+   /               =>  vim_auto_file
+   /Content Type   =>  text/plain
+
+You can make changes by changing any of these lines and saving the file.
+{RegistryWrite} will then apply these changes back to the registry:
+
+
+   /               => Vim.Vim.6
+
+If you wanted to add a new entry then you just enter a new line with the
+appropriate data:
+
+   /DefaultIcon/   => "c:\\vim\\vim61\\gvim.exe,2"
+
+To remove a line you need to replace the => with XX. I.e. say you don't like
+that icon:
+
+   /DefaultIcon/   XX "c:\\vim\\vim61\\gvim.exe,2"
+
+All valid lines have the format:
+
+   key  =>  value
+
+ or
+
+   key  XX  [ value ]
+
+Where key will be a key if it ends in text, or a subkey if it ends in a
+forward slash (/). Thus:
+
+  /test/  => example1
+  /test   => example2
+
+Would create:
+
+ -------------------------------------
+ | Path     | Key        | Value     |
+ -------------------------------------
+ | /test    | (default)    example1  |
+ |          | test         example2  |
+ -------------------------------------
+
+Please be aware that this is not really a registry editor because it doesn't
+respect any kind of state. That is if you connect to the registry and make
+some changes and save it only those changes will be made. If you delete all of
+the lines it will not delete all of the entries in that key of the registry,
+in fact it would just cause nothing to be done.
+
+Such an improvement maybe added at some point in the future.
+
+
+==============================================================================
+3. Problems						*registryedit-problems*
+
+Contact the author:
+
+ Colin Keith <vim at ckeith.clara.net>
+
+Happy Vimming!
+
+ vim:tw=78:ts=8:ft=help:norl:
+
